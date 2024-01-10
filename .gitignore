@@ -1,3 +1,6 @@
 data
 mlruns
 mlartifacts
+catboost_info
+roc_auc_cat_plot.png
+roc_auc_plot.png
