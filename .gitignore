@@ -3,3 +3,4 @@ mlruns
 mlartifacts
 catboost_info
 mlartifacts
+knn_optuna_model.joblib
