@@ -20,7 +20,7 @@ class Dataset_data(BaseModel):
     MEDICAL_UNIT: List
     SEX: List
     PATIENT_TYPE: List
-    DATE_DIED: List
+    # DATE_DIED: List
     INTUBED: List
     PNEUMONIA: List
     AGE: List
@@ -44,11 +44,12 @@ model_knn = joblib.load('model_knn.joblib')
 model_cat = joblib.load('model_catb.joblib')
 model_xgb = joblib.load('model_xgb.joblib')
 model_nb = joblib.load('model_nb.joblib')
+model_lgbm = joblib.load('model_lgbm.joblib')
 
 @app.post("/model/predict")
 async def predict_xgb(data: Dataset_data):
     data = pd.read_json(data.model_dump_json(), orient='list')
     data = data.set_index('index')
-    model_prediction = pd.DataFrame(np.round(model.predict(data)))
+    model_prediction = pd.DataFrame(np.round(model_xgb.predict(data)))
     model_prediction = model_prediction.reset_index().to_json()
     return model_prediction
