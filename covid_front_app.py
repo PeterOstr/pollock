@@ -11,4 +11,5 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, r2_score, 
 
 # Header and text
 st.title("Diabetes prediction dataset DASHBOARD")
-st.write("""This dashboard will present the info about the Diabetes prediction dataset from Kaggle (https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset).""")
+st.write("""This dashboard will present the info about the COVID-19 dataset, taken from 
+Kaggle platform (https://www.kaggle.com/datasets/meirnizri/covid19-dataset)).""")
