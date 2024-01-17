@@ -4,3 +4,6 @@ mlartifacts
 catboost_info
 mlartifacts
 model_knn.joblib
+covid_data_sl.csv
+X.csv
+y.csv
