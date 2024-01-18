@@ -7,3 +7,9 @@ model_knn.joblib
 covid_data_sl.csv
 X.csv
 y.csv
+y_pred_catb.csv
+y_pred_lgbm.csv
+y_pred_nb.csv
+y_pred_xgb.csv
+y_pred_knn.csv
+y_pred_logreg.csv
