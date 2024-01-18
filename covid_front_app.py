@@ -88,7 +88,7 @@ uploaded_file = st.sidebar.file_uploader("Upload y_pred.csv file", type=["csv"])
 
 # Placeholder for dataframes
 y = pd.DataFrame()
-y_pred = pd.DataFrame()
+y_scores = pd.DataFrame()
 
 button_answer = st.sidebar.button('Check')
 
@@ -209,41 +209,42 @@ if page == "Other":
     X = pd.read_csv('X.csv')
     X_dict = X.reset_index().to_dict(orient='list')
 
-
-
-    st.divider()
-    new_line()
-
-    with st.expander("Show EDA"):
-        new_line()
-
-        # Head
-        xgb = st.checkbox("XGB", value=False)
-        new_line()
-        if head:
-            st.dataframe(df.head(), use_container_width=True)
-
-        # Tail
-        tail = st.checkbox("Show Last 5 Rows", value=False)
-        new_line()
-        if tail:
-            st.dataframe(df.tail(), use_container_width=True)
-
-        # Shape
-        shape = st.checkbox("Show Shape", value=False)
-        new_line()
-        if shape:
-            st.write(f"This DataFrame has **{df.shape[0]} rows** and **{df.shape[1]} columns**.")
-            new_line()
+    # Чекбокс для выбора модели
+    use_xgb_model = st.checkbox("Use XGBoost Model", value=True)
+    use_lgbm_model = st.checkbox("Use LightGBM Model", value=True)
+    use_catb_model = st.checkbox("Use CatBoost Model", value=True)
+    use_logreg_model = st.checkbox("Use Logistic Regression Model", value=True)
+    use_knn_model = st.checkbox("Use KNN Model", value=True)
+    use_nb_model = st.checkbox("Use Naive Bayes Model", value=True)
+    use_ens_model = st.checkbox("Use Ensemble Model", value=True)
 
     # Кнопка для отправки запроса
     if st.button("Make Prediction"):
-        # Отправка запроса
-        predicted_data_response_xgb = requests.post('https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_xgb', json=X_dict)
+        # Отправка запроса в зависимости от выбранной модели
+        if use_xgb_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_xgb'
+        elif use_lgbm_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_lgbm'
+        elif use_catb_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_catb'
+        elif use_logreg_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_logreg'
+        elif use_knn_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_knn'
+        elif use_nb_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_nb'
+        elif use_ens_model:
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_ens'
+
+        else:
+            # Добавьте здесь другие модели, если необходимо
+            endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_default'
+
+        predicted_data_response = requests.post(endpoint, json=X_dict)
 
         # Проверка успешности запроса
-        if predicted_data_response_xgb.status_code == 200:
-            y_scores = pd.read_json(StringIO(predicted_data_response_xgb.json())).set_index('index')
+        if predicted_data_response.status_code == 200:
+            y_scores = pd.read_json(StringIO(predicted_data_response.json())).set_index('index')
 
             # Рассчет ROC AUC
             fpr, tpr, thresholds = roc_curve(y, y_scores)
@@ -263,8 +264,21 @@ if page == "Other":
             # Отображение графика в Streamlit
             st.plotly_chart(fig)
             st.write(f'ROC AUC Score: {roc_auc:.2f}')
+
+            # Confusion Matrix
+            cm = confusion_matrix(y, y_scores)
+
+            # Normalize the confusion matrix
+            cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix (Normalized)')
+            st.pyplot(fig)
+
         else:
-            st.error(f"Error in prediction request. Status code: {predicted_data_response_xgb.status_code}")
+            st.error(f"Error in prediction request. Status code: {predicted_data_response.status_code}")
 
 
 
