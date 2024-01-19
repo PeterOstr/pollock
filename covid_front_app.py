@@ -57,11 +57,8 @@ st.markdown("""
 # -- Notes on whitening
 with st.expander("See notes"):
     st.markdown("""
- * Whitening is a process that re-weights a signal, so that all frequency bins have a nearly equal amount of noise. 
- * A band-pass filter uses both a low frequency cutoff and a high frequency cutoff, and only passes signals in the frequency band between these values.
-
-See also:
- * [Signal Processing Tutorial](https://share.streamlit.io/jkanner/streamlit-audio/main/app.py)
+ * Wtextount of noise. 
+  [Signal Processing Tutorial](https://share.streamlit.io/jkanner/streamlit-audio/main/app.py)
 """)
 
 # sidebar
