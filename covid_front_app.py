@@ -54,15 +54,7 @@ st.markdown("""
 """)
 
 
-# -- Notes on whitening
-with st.expander("See notes"):
-    st.markdown("""
- * Below you can see three buttons:
-    -display a curve
-    -build a Confuison matrix
-    -show a table of parameters
-  [Signal Processing Tutorial](https://share.streamlit.io/jkanner/streamlit-audio/main/app.py)
-""")
+
 
 # sidebar
 st.sidebar.title("About")
@@ -84,14 +76,14 @@ def new_line(n=1):
     for i in range(n):
         st.write("\n")
 
-# Function to plot Confusion Matrix
-def plot_confusion_matrix(cm, model_name):
-    cm_percentage = cm.astype('float') / cm
-    # Display the confusion matrix
-    fig, ax = plt.subplots()
-    ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
-    ax.set_title(f'Confusion Matrix - {model_name} (Normalized)')
-    st.pyplot(fig)
+# # Function to plot Confusion Matrix
+# def plot_confusion_matrix(cm, model_name):
+#     cm_percentage = cm.astype('float') / cm
+#     # Display the confusion matrix
+#     fig, ax = plt.subplots()
+#     ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+#     ax.set_title(f'Confusion Matrix - {model_name} (Normalized)')
+#     st.pyplot(fig)
 
 
 # Placeholder for dataframes
@@ -266,13 +258,22 @@ possible value is 0, if either precision or recall are zero.
 if page == "Charts":
     st.header("""Charts Demo""")
 
+    with st.expander("See notes"):
+        st.write("""
+        * Below you can see three buttons:
+            - Display a curve - to plot a ROC curve
+            - Build a Confusion matrix - to plot a Confusion matrix
+            - Show a table of parameters - to show a table of measures of predictive performance
+        
+        """)
+
     y = pd.read_csv('y.csv')
-    y_pred_catb = pd.read_csv('y_pred_catb.csv')
-    y_pred_knn = pd.read_csv('y_pred_knn.csv')
-    y_pred_xgb = pd.read_csv('y_pred_xgb.csv')
-    y_pred_lgbm = pd.read_csv('y_pred_lgbm.csv')
-    y_pred_logreg = pd.read_csv('y_pred_logreg.csv')
-    y_pred_nb = pd.read_csv('y_pred_nb.csv')
+    y_pred_catb = pd.read_csv('data_strmlt/y_pred_catb.csv')
+    y_pred_knn = pd.read_csv('data_strmlt/y_pred_knn.csv')
+    y_pred_xgb = pd.read_csv('data_strmlt/y_pred_xgb.csv')
+    y_pred_lgbm = pd.read_csv('data_strmlt/y_pred_lgbm.csv')
+    y_pred_logreg = pd.read_csv('data_strmlt/y_pred_logreg.csv')
+    y_pred_nb = pd.read_csv('data_strmlt/y_pred_nb.csv')
 
     st.markdown("""#### ROC Curve (ROC)    """)
 
