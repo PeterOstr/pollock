@@ -53,7 +53,14 @@ st.markdown("""
  We predict survival from covid. Target - 'date died': If the patient survived - 0, and 1 otherwise.
 """)
 
-
+# downloading from data for charts from github
+y = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y.csv')
+y_pred_catb = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_catb.csv')
+y_pred_knn = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_knn.csv')
+y_pred_xgb = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_xgb.csv')
+y_pred_lgbm = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_lgbm.csv')
+y_pred_logreg = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_logreg.csv')
+y_pred_nb = pd.read_csv('https://github.com/PeterOstr/pollock/tree/main/y_pred_nb.csv')
 
 
 # sidebar
@@ -267,13 +274,14 @@ if page == "Charts":
         
         """)
 
-    y = pd.read_csv('y.csv')
-    y_pred_catb = pd.read_csv('data_strmlt/y_pred_catb.csv')
-    y_pred_knn = pd.read_csv('data_strmlt/y_pred_knn.csv')
-    y_pred_xgb = pd.read_csv('data_strmlt/y_pred_xgb.csv')
-    y_pred_lgbm = pd.read_csv('data_strmlt/y_pred_lgbm.csv')
-    y_pred_logreg = pd.read_csv('data_strmlt/y_pred_logreg.csv')
-    y_pred_nb = pd.read_csv('data_strmlt/y_pred_nb.csv')
+    # y = pd.read_csv('y.csv')
+    # y_pred_catb = pd.read_csv('data_strmlt/y_pred_catb.csv')
+    # y_pred_knn = pd.read_csv('data_strmlt/y_pred_knn.csv')
+    # y_pred_xgb = pd.read_csv('data_strmlt/y_pred_xgb.csv')
+    # y_pred_lgbm = pd.read_csv('data_strmlt/y_pred_lgbm.csv')
+    # y_pred_logreg = pd.read_csv('data_strmlt/y_pred_logreg.csv')
+    # y_pred_nb = pd.read_csv('data_strmlt/y_pred_nb.csv')
+
 
     st.markdown("""#### ROC Curve (ROC)    """)
 
