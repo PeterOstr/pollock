@@ -57,7 +57,10 @@ st.markdown("""
 # -- Notes on whitening
 with st.expander("See notes"):
     st.markdown("""
- * Wtextount of noise. 
+ * Below you can see three buttons:
+    -display a curve
+    -build a Confuison matrix
+    -show a table of parameters
   [Signal Processing Tutorial](https://share.streamlit.io/jkanner/streamlit-audio/main/app.py)
 """)
 
@@ -72,7 +75,8 @@ st.sidebar.info(
 
 
 page = st.sidebar.selectbox("Choose page",
-                            ["Charts",
+                            ["Info",
+                             "Charts",
                              "Make prediction"])
 
 # New Line
@@ -83,6 +87,12 @@ def new_line(n=1):
 # Function to plot Confusion Matrix
 def plot_confusion_matrix(cm, model_name):
     cm_percentage = cm.astype('float') / cm
+    # Display the confusion matrix
+    fig, ax = plt.subplots()
+    ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+    ax.set_title(f'Confusion Matrix - {model_name} (Normalized)')
+    st.pyplot(fig)
+
 
 # Placeholder for dataframes
 y = pd.DataFrame()
@@ -91,10 +101,166 @@ y_scores = pd.DataFrame()
 
 
 if page == "Info":
-    st.header("""Some info about """)
+    st.header("""Some info about models""")
 
-    st.markdown("""#### ROC Curve (ROC)    """)
+    st.markdown("""#### KNN    """)
+    st.markdown(""" The K-Nearest Neighbors (KNN) algorithm is a popular machine learning technique used for 
+    classification and regression tasks. It relies on the idea that similar data points tend to have similar labels or 
+    values.
+
+During the training phase, the KNN algorithm stores the entire training dataset as a reference. When making predictions,
+ it calculates the distance between the input data point and all the training examples, using a chosen distance metric
+  such as Euclidean distance.
+
+Next, the algorithm identifies the K nearest neighbors to the input data point based on their distances. 
+In the case of classification, the algorithm assigns the most common class label among the K neighbors as the 
+predicted label for the input data point. For regression, it calculates the average or weighted average
+ of the target values of the K neighbors to predict the value for the input data point.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)
+       """)
+
+    st.markdown("""#### XGBoost    """)
+    st.markdown(""" XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, 
+    flexible and portable. It implements machine learning algorithms under the Gradient Boosting framework. XGBoost 
+    provides a parallel tree boosting (also known as GBDT, GBM) that solve many data science problems in a fast and 
+    accurate way. The same code runs on major distributed environment (Hadoop, SGE, MPI) and can solve problems beyond
+     billions of examples.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/XGBoost)
+       """)
+
+    st.markdown("""#### Catboost    """)
+    st.markdown(""" Catboost is a boosted decision tree machine learning algorithm developed by Yandex. It works in the
+     same way as other gradient boosted algorithms such as XGBoost but provides support out of the box for categorical
+      variables, has a higher level of accuracy without tuning parameters and also offers GPU support to speed up 
+      training.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/CatBoost)
+       """)
+
+    st.markdown("""#### Light GBM    """)
+    st.markdown(""" Light GBM is a gradient boosting framework that uses tree based learning algorithm.
+Light GBM grows tree vertically while other algorithm grows trees horizontally meaning that Light GBM grows tree 
+leaf-wise while other algorithm grows level-wise. It will choose the leaf with max delta loss to grow. When growing the
+ same leaf, Leaf-wise algorithm can reduce more loss than a level-wise algorithm.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/LightGBM)
+       """)
+
+    st.markdown("""#### Logistic Regression    """)
+    st.markdown(""" Logistic Regression is a statistical method used for binary and multi-class classification problems.
+     Despite its name, it is a classification algorithm rather than a regression one. It predicts the probability of an 
+     instance belonging to a particular class, and then makes a discrete prediction based on a threshold.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/Logistic_regression)
+       """)
+
+    st.markdown("""#### Naive Bayes    """)
+    st.markdown(""" Naive Bayes is a probabilistic classification algorithm based on Bayes' theorem, which calculates
+     the probability of a hypothesis (class) given the observed evidence (features). The "naive" assumption in Naive 
+     Bayes is that all features are conditionally independent given the class. This simplifying assumption significantly
+      reduces computational complexity, making it computationally efficient. Naive Bayes is computationally efficient
+       due to the independence assumption, making it particularly useful for large datasets.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)
+       """)
+
+    st.header("""Some info about charts""")
+    st.markdown("""#### ROC curve    """)
+    st.markdown(""" A receiver operating characteristic curve, or ROC curve, is a graphical plot that illustrates the 
+    performance of a binary classifier model (can be used for multi class classification as well) at varying threshold 
+    values.
+
+The ROC curve is the plot of the true positive rate (TPR) against the false positive rate (FPR) at each threshold 
+setting.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+       """)
+
+    st.markdown("""#### Confusion Matrix    """)
+    st.markdown(""" In the field of machine learning and specifically the problem of statistical classification, a 
+    confusion matrix, also known as error matrix,[11] is a specific table layout that allows visualization of the 
+    performance of an algorithm, typically a supervised learning one; in unsupervised learning it is usually called a
+     matching matrix.
+
+Each row of the matrix represents the instances in an actual class while each column represents the instances in a 
+predicted class, or vice versa – both variants are found in the literature.[12] The name stems from the fact that it
+ makes it easy to see whether the system is confusing two classes (i.e. commonly mislabeling one as another).
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/Confusion_matrix)
+       """)
+
+    st.header("""Some info about metrics""")
+    st.markdown("""#### Accuracy and Precision    """)
     st.markdown(""" 
+    Accuracy and precision are two measures of observational error. Accuracy is how close a given set of measurements 
+    (observations or readings) are to their true value, while precision is how close the measurements are to each other.
+
+In other words, precision is a description of random errors, a measure of statistical variability.
+ Accuracy has two definitions:
+
+More commonly, it is a description of only systematic errors, a measure of statistical bias of a given measure of 
+central tendency; low accuracy causes a difference between a result and a true value; ISO calls this trueness.
+
+Alternatively, the International Organization for Standardization (ISO) defines accuracy as describing a 
+combination of both types of observational error (random and systematic), so high accuracy requires both high
+ precision and high trueness.
+In the first, more common definition of "accuracy" above, the concept is independent of "precision", so a particular 
+set of data can be said to be accurate, precise, both, or neither.
+
+In simpler terms, given a statistical sample or set of data points from repeated measurements of the same quantity,
+ the sample or set can be said to be accurate if their average is close to the true value of the quantity being
+  measured, while the set can be said to be precise if their standard deviation is relatively small.
+  
+   [For more information see here](https://en.wikipedia.org/wiki/Accuracy_and_precision)
+       """)
+
+    st.markdown("""#### Recall    """)
+    st.markdown(""" 
+    Recall, also known as the true positive rate (TPR), is the percentage of data samples that a machine learning model 
+    correctly identifies as belonging to a class of interest—the “positive class”—out of the total samples for that
+     class.
+ 
+ [For more information see here](https://en.wikipedia.org/wiki/Precision_and_recall)
+       """)
+
+    st.markdown("""#### F1 Score    """)
+    st.markdown(""" 
+    In statistical analysis of binary classification and information retrieval systems, the F-score or F-measure is a 
+    measure of predictive performance. It is calculated from the precision and recall of the test, where the precision 
+    is the number of true positive results divided by the number of all samples predicted to be positive, including 
+    those not identified correctly, and the recall is the number of true positive results divided by the number of all
+     samples that should have been identified as positive. Precision is also known as positive predictive value, and
+      recall is also known as sensitivity in diagnostic binary classification.
+
+The F1 score is the harmonic mean of the precision and recall. It thus symmetrically represents both precision and
+ recall in one metric. The more generic 
+F_{beta } score applies additional weights, valuing one of precision or recall more than the other.
+
+The highest possible value of an F-score is 1.0, indicating perfect precision and recall, and the lowest 
+possible value is 0, if either precision or recall are zero.
+  
+   [For more information see here](https://en.wikipedia.org/wiki/F-score)
+  
+       """)
+
+    st.markdown("""#### R2 Score    """)
+    st.markdown(""" 
+    R-Squared (R² or the coefficient of determination) is a statistical measure in a regression model that determines 
+    the proportion of variance in the dependent variable that can be explained by the independent variable. In other 
+    words, r-squared shows how well the data fit the regression model (the goodness of fit).
+  
+   [For more information see here](https://en.wikipedia.org/wiki/Coefficient_of_determination)
+         """)
+
+    st.markdown("""#### Balanced Accuracy    """)
+    st.markdown(""" 
+    Balanced accuracy is a metric that one can use when evaluating how good a binary classifier is. It is especially 
+    useful when the classes are imbalanced, i.e. one of the two classes appears a lot more often than the other. 
+    This happens often in many settings such as anomaly detection and the presence of a disease.
+  
+   [For more information see here](https://statisticaloddsandends.wordpress.com/2020/01/23/what-is-balanced-accuracy/)
        """)
 
 if page == "Charts":
@@ -169,46 +335,118 @@ if page == "Charts":
 
     # Button to plot ROC AUC curves
     if st.button("Plot Confusion Matrix"):
-
         # Plotting Confusion Matrix for selected models
         if use_xgb_model:
             cm = confusion_matrix(y, y_pred_xgb)
-            plot_confusion_matrix(cm, "XGBoost")
+                # Normalize the confusion matrix
+            cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix XGBoost (Normalized)')
+            st.pyplot(fig)
 
         if use_lgbm_model:
             cm = confusion_matrix(y, y_pred_lgbm)
-            plot_confusion_matrix(cm, "LightGBM")
+            # plot_confusion_matrix(cm, "LightGBM")
+            cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix LightGBM (Normalized)')
+            st.pyplot(fig)
 
         if use_catb_model:
             cm = confusion_matrix(y, y_pred_catb)
-            plot_confusion_matrix(cm, "CatBoost")
+            cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix CatBoost (Normalized)')
+            st.pyplot(fig)
 
         if use_logreg_model:
             cm = confusion_matrix(y, y_pred_logreg)
-            plot_confusion_matrix(cm, "Logistic Regression")
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix Logistic Regression (Normalized)')
+            st.pyplot(fig)
 
         if use_nb_model:
             cm = confusion_matrix(y, y_pred_nb)
-            plot_confusion_matrix(cm, "Naive Bayes")
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix Naive Bayes (Normalized)')
+            st.pyplot(fig)
 
         if use_knn_model:
             cm = confusion_matrix(y, y_pred_knn)
-            plot_confusion_matrix(cm, "KNN")
+            # Display the confusion matrix
+            fig, ax = plt.subplots()
+            ConfusionMatrixDisplay(confusion_matrix=cm_percentage, display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
+            ax.set_title('Confusion Matrix KNN (Normalized)')
+            st.pyplot(fig)
 
-        # # Confusion Matrix
-        # cm = confusion_matrix(y, y_pred_nb)
+    if st.button("Show Metrics Table"):
+        # Create a DataFrame to store the metrics
+        metrics_df = pd.DataFrame(columns=['Model', 'Accuracy', 'Recall', 'F1 Score', 'R2 Score', 'Balanced Accuracy'])
 
+        # Calculate and add metrics for selected models
+        if use_xgb_model:
+            accuracy = accuracy_score(y, y_pred_xgb)
+            recall = recall_score(y, y_pred_xgb)
+            f1 = f1_score(y, y_pred_xgb)
+            r2 = r2_score(y, y_pred_xgb)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_xgb)
+            metrics_df = metrics_df._append({'Model': 'XGBoost', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
 
-        # # Normalize the confusion matrix
-        # cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        if use_lgbm_model:
+            accuracy = accuracy_score(y, y_pred_lgbm)
+            recall = recall_score(y, y_pred_lgbm)
+            f1 = f1_score(y, y_pred_lgbm)
+            r2 = r2_score(y, y_pred_lgbm)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_lgbm)
+            metrics_df = metrics_df._append({'Model': 'LightGBM', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
 
-        plot_confusion_matrix(cm, "Confusion Matrix")
+        if use_catb_model:
+            accuracy = accuracy_score(y, y_pred_catb)
+            recall = recall_score(y, y_pred_catb)
+            f1 = f1_score(y, y_pred_catb)
+            r2 = r2_score(y, y_pred_catb)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_catb)
+            metrics_df = metrics_df._append({'Model': 'CatBoost', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
 
-        # Display the confusion matrix
-        fig, ax = plt.subplots()
-        ConfusionMatrixDisplay(confusion_matrix=plot_confusion_matrix(), display_labels=[0, 1]).plot(cmap='Blues', ax=ax)
-        ax.set_title('Confusion Matrix (Normalized)')
-        st.pyplot(fig)
+        if use_logreg_model:
+            accuracy = accuracy_score(y, y_pred_logreg)
+            recall = recall_score(y, y_pred_logreg)
+            f1 = f1_score(y, y_pred_logreg)
+            r2 = r2_score(y, y_pred_logreg)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_logreg)
+            metrics_df = metrics_df._append({'Model': 'LogReg', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
+
+        if use_nb_model:
+            accuracy = accuracy_score(y, y_pred_nb)
+            recall = recall_score(y, y_pred_nb)
+            f1 = f1_score(y, y_pred_nb)
+            r2 = r2_score(y, y_pred_nb)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_nb)
+            metrics_df = metrics_df._append({'Model': 'CatBoost', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
+
+        if use_knn_model:
+            accuracy = accuracy_score(y, y_pred_knn)
+            recall = recall_score(y, y_pred_knn)
+            f1 = f1_score(y, y_pred_knn)
+            r2 = r2_score(y, y_pred_knn)
+            balanced_accuracy = balanced_accuracy_score(y, y_pred_knn)
+            metrics_df = metrics_df._append({'Model': 'KNN', 'Accuracy': accuracy, 'Recall': recall, 'F1 Score': f1, 'R2 Score': r2, 'Balanced Accuracy': balanced_accuracy}, ignore_index=True)
+
+    # Repeat the above pattern for other models
+
+        # Display the metrics table
+        st.table(metrics_df)
+
 
 
 
