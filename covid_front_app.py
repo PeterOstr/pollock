@@ -92,7 +92,7 @@ y_scores = pd.DataFrame()
 
 
 if page == "Info":
-    st.header("""Some info about models""")
+    st.header("""About models""")
 
     st.markdown("""#### KNN    """)
     st.markdown(""" The K-Nearest Neighbors (KNN) algorithm is a popular machine learning technique used for 
@@ -157,7 +157,7 @@ leaf-wise while other algorithm grows level-wise. It will choose the leaf with m
  [For more information see here](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)
        """)
 
-    st.header("""Some info about charts""")
+    st.header("""About charts""")
     st.markdown("""#### ROC curve    """)
     st.markdown(""" A receiver operating characteristic curve, or ROC curve, is a graphical plot that illustrates the 
     performance of a binary classifier model (can be used for multi class classification as well) at varying threshold 
@@ -182,7 +182,7 @@ predicted class, or vice versa – both variants are found in the literature.[12
  [For more information see here](https://en.wikipedia.org/wiki/Confusion_matrix)
        """)
 
-    st.header("""Some info about metrics""")
+    st.header("""About metrics""")
     st.markdown("""#### Accuracy and Precision    """)
     st.markdown(""" 
     Accuracy and precision are two measures of observational error. Accuracy is how close a given set of measurements 
