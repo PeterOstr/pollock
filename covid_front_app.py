@@ -465,10 +465,16 @@ if page == "Make prediction":
 
     uploaded_file = st.file_uploader("Choose a CSV file")
 
+    st.markdown(""" 
+    [File-request example can be downloaded here](https://raw.githubusercontent.com/PeterOstr/pollock/main/X_request.csv)
+       """)
+
+
     st.header("Select your model and make prediction:")
 
     # # File uploader
     # uploaded_file = st.sidebar.file_uploader("Upload y_pred.csv file", type=["csv"])
+
 
     # Check if file is uploaded
     if 'uploaded_file' not in st.session_state or st.session_state.uploaded_file is None:
