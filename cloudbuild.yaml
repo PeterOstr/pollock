@@ -29,7 +29,7 @@ steps:
         "--platform",
         "managed",
         "--allow-unauthenticated",
-        "port",
+        "--port",
         "8000"
       ]
 options:
