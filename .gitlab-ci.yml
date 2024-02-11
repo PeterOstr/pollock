@@ -16,4 +16,4 @@ deploy_staging:
     ENV_IMG_NAME: "api"
     ENV: "pollock"
     ARTIFACT_REPO: "pollock"
-    SERVICE_NAME: "api_gcl"
+    SERVICE_NAME: "api"
