@@ -10,7 +10,7 @@ COPY main.py .
 COPY requirements.txt .
 
 COPY model_catb.joblib .
-COPY model_knn.joblib .
+#COPY model_knn.joblib .
 COPY model_lgbm.joblib .
 COPY model_logreg.joblib .
 COPY model_nb.joblib .

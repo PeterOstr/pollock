@@ -292,7 +292,7 @@ if page == "Charts":
     use_catb_model = st.checkbox("Use CatBoost Model", value=False)
     use_logreg_model = st.checkbox("Use Logistic Regression Model", value=False)
     use_nb_model = st.checkbox("Use Naive Bayes Model", value=False)
-    use_knn_model = st.checkbox("Use KNN Model", value=False)
+    # use_knn_model = st.checkbox("Use KNN Model", value=False)
 
     # Button to plot ROC AUC curves
     if st.button("Plot ROC AUC Curves"):
@@ -497,7 +497,7 @@ if page == "Make prediction":
         use_lgbm_model = st.checkbox("Use LightGBM Model", value=False)
         use_catb_model = st.checkbox("Use CatBoost Model", value=False)
         use_logreg_model = st.checkbox("Use Logistic Regression Model", value=False)
-        use_knn_model = st.checkbox("Use KNN Model", value=False)
+        # use_knn_model = st.checkbox("Use KNN Model", value=False)
         use_nb_model = st.checkbox("Use Naive Bayes Model", value=False)
         use_ens_model = st.checkbox("Use Ensemble Model", value=False)
 
@@ -512,8 +512,8 @@ if page == "Make prediction":
                 endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_catb'
             elif use_logreg_model:
                 endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_logreg'
-            elif use_knn_model:
-                endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_knn'
+            # elif use_knn_model:
+            #     endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_knn'
             elif use_nb_model:
                 endpoint = 'https://covidapp-bmvhwrbbeq-lm.a.run.app/model/predict_nb'
             elif use_ens_model:
