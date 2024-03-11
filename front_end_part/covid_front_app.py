@@ -292,7 +292,7 @@ if page == "Charts":
     use_catb_model = st.checkbox("Use CatBoost Model", value=False)
     use_logreg_model = st.checkbox("Use Logistic Regression Model", value=False)
     use_nb_model = st.checkbox("Use Naive Bayes Model", value=False)
-    # use_knn_model = st.checkbox("Use KNN Model", value=False)
+    use_knn_model = st.checkbox("Use KNN Model", value=False)
 
     # Button to plot ROC AUC curves
     if st.button("Plot ROC AUC Curves"):
